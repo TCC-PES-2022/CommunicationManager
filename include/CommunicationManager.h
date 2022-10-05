@@ -18,9 +18,46 @@ public:
     ~CommunicationManager();
 
     /*
-    *******************************************************************************
+    ****************************************************************************
+                                    GENERAL
+    ****************************************************************************
+    */
+
+    /**
+     * @brief Set TFTP server port for DataLoader TFTP server.
+     *        This is the port to be used by the DataLoader's
+     *        TFTP server to send/receive files to/from the TargetHardware.
+     *        The default port for TFTP in ARINC-615A is 59, but this port is
+     *        used by the TargetHardware, so if you're running both the
+     *        TargetHardware and the DataLoader in the same machine, you must
+     *        change the default port
+     *
+     * @param[in] handler the communication handler.
+     * @param[in] port the port to be used by DataLoader's TFTP server.
+     *
+     * @return COMMUNICATION_OPERATION_OK if success.
+     * @return COMMUNICATION_OPERATION_ERROR otherwise.
+     */
+    CommunicationOperationResult setTftpDataLoaderServerPort(unsigned short port);
+    
+    /**
+     * @brief Set TFTP server port for TargetHardware TFTP server.
+     *        This is the port to be used by the Dataloader's
+     *        TFTP client to connect to the TargetHardware's TFTP server.
+     *        If this function is not called, the default port is 59 will be used.
+     *
+     * @param[in] handler the communication handler.
+     * @param[in] port the port to be used by ARINC-615A TFTP server.
+     *
+     * @return COMMUNICATION_OPERATION_OK if success.
+     * @return COMMUNICATION_OPERATION_ERROR otherwise.
+     */
+    CommunicationOperationResult setTftpTargetHardwareServerPort(unsigned short port);
+
+    /*
+    ****************************************************************************
                                      FIND OPERATION
-    *******************************************************************************
+    ****************************************************************************
     */
     /**
      * @brief Register find started callback.
@@ -71,9 +108,9 @@ public:
     CommunicationOperationResult find();
 
     /*
-    *******************************************************************************
+    ****************************************************************************
                                     UPLOAD OPERATION
-    *******************************************************************************
+    ****************************************************************************
     */
     /**
      * @brief Set TargetHardware ID. This is the ID of the TargetHardware where the

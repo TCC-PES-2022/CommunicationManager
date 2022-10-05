@@ -18,6 +18,22 @@ CommunicationManager::~CommunicationManager()
     }
 }
 
+CommunicationOperationResult CommunicationManager::setTftpDataLoaderServerPort(
+    unsigned short port)
+{
+    return uploader->setTftpDataLoaderServerPort(port) == UploadOperationResult::UPLOAD_OPERATION_OK
+               ? COMMUNICATION_OPERATION_OK
+               : COMMUNICATION_OPERATION_ERROR;
+}
+
+CommunicationOperationResult CommunicationManager::setTftpTargetHardwareServerPort(
+    unsigned short port)
+{
+    return uploader->setTftpTargetHardwareServerPort(port) == UploadOperationResult::UPLOAD_OPERATION_OK
+               ? COMMUNICATION_OPERATION_OK
+               : COMMUNICATION_OPERATION_ERROR;
+}
+
 CommunicationOperationResult CommunicationManager::registerFindStartedCallback(
     findStarted callback, std::shared_ptr<void> context)
 {

@@ -153,6 +153,32 @@ CommunicationOperationResult destroy_handler(CommunicationHandlerPtr *handler)
     return COMMUNICATION_OPERATION_OK;
 }
 
+CommunicationOperationResult set_tftp_dataloader_server_port(
+    CommunicationHandlerPtr handler, unsigned short port)
+{
+    if (handler == NULL || handler->manager == NULL)
+    {
+        return COMMUNICATION_OPERATION_ERROR;
+    }
+
+    handler->manager->setTftpDataLoaderServerPort(port);
+
+    return COMMUNICATION_OPERATION_OK;
+}
+
+CommunicationOperationResult set_tftp_targethardware_server_port(
+    CommunicationHandlerPtr handler, unsigned short port)
+{
+    if (handler == NULL || handler->manager == NULL)
+    {
+        return COMMUNICATION_OPERATION_ERROR;
+    }
+
+    handler->manager->setTftpTargetHardwareServerPort(port);
+
+    return COMMUNICATION_OPERATION_OK;
+}
+
 CommunicationOperationResult register_find_started_callback(
     CommunicationHandlerPtr handler, find_started callback, void *context)
 {
