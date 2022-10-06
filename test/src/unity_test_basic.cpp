@@ -2,14 +2,14 @@
 
 #include "communication_api.h"
 
-class CommunicationManagerTest : public ::testing::Test
+class CommunicationManagerBasicTest : public ::testing::Test
 {
 protected:
-    CommunicationManagerTest()
+    CommunicationManagerBasicTest()
     {
     }
 
-    ~CommunicationManagerTest() override
+    ~CommunicationManagerBasicTest() override
     {
     }
 
@@ -29,7 +29,7 @@ protected:
     CommunicationHandlerPtr handler;
 };
 
-TEST_F(CommunicationManagerTest, RegisterFindStartedCallback)
+TEST_F(CommunicationManagerBasicTest, RegisterFindStartedCallback)
 {
     find_started callback = [](CommunicationHandlerPtr handler,
                                void *context)
@@ -41,7 +41,7 @@ TEST_F(CommunicationManagerTest, RegisterFindStartedCallback)
     ASSERT_EQ(result, COMMUNICATION_OPERATION_OK);
 }
 
-TEST_F(CommunicationManagerTest, RegisterFindFinishedCallback)
+TEST_F(CommunicationManagerBasicTest, RegisterFindFinishedCallback)
 {
     find_finished callback = [](CommunicationHandlerPtr handler,
                                 void *context)
@@ -53,7 +53,7 @@ TEST_F(CommunicationManagerTest, RegisterFindFinishedCallback)
     ASSERT_EQ(result, COMMUNICATION_OPERATION_OK);
 }
 
-TEST_F(CommunicationManagerTest, RegisterFindNewDeviceCallback)
+TEST_F(CommunicationManagerBasicTest, RegisterFindNewDeviceCallback)
 {
     find_new_device callback = [](CommunicationHandlerPtr handler,
                                   const char *device,
@@ -66,7 +66,7 @@ TEST_F(CommunicationManagerTest, RegisterFindNewDeviceCallback)
     ASSERT_EQ(result, COMMUNICATION_OPERATION_OK);
 }
 
-TEST_F(CommunicationManagerTest, RegisterUploadInitializationResponseCallback)
+TEST_F(CommunicationManagerBasicTest, RegisterUploadInitializationResponseCallback)
 {
     upload_initialization_response_callback callback = [](CommunicationHandlerPtr handler,
                                                           const char *response,
@@ -79,7 +79,7 @@ TEST_F(CommunicationManagerTest, RegisterUploadInitializationResponseCallback)
     ASSERT_EQ(result, COMMUNICATION_OPERATION_OK);
 }
 
-TEST_F(CommunicationManagerTest, RegisterUploadInformationStatusCallback)
+TEST_F(CommunicationManagerBasicTest, RegisterUploadInformationStatusCallback)
 {
     upload_information_status_callback callback = [](CommunicationHandlerPtr handler,
                                                      const char *status,
@@ -92,7 +92,7 @@ TEST_F(CommunicationManagerTest, RegisterUploadInformationStatusCallback)
     ASSERT_EQ(result, COMMUNICATION_OPERATION_OK);
 }
 
-TEST_F(CommunicationManagerTest, RegisterUploadFileNotAvailableCallback)
+TEST_F(CommunicationManagerBasicTest, RegisterUploadFileNotAvailableCallback)
 {
     file_not_available_callback callback = [](CommunicationHandlerPtr handler,
                                               unsigned short *wait_time_s,
