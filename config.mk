@@ -2,21 +2,20 @@
 VERSION = 0.1
 
 # paths
-DEST 	:= /opt/fls
-DEPS 	:= ARINC615AManager
+DESTDIR 	?= /tmp
+DEP_PATH 	?= $(DESTDIR)
 
-INSTALL_PATH 	:= $(DEST)
-DEP_PATH 		:= $(DEST)
+DEPS 		:= ARINC615AManager
+# LIB_DEPS	:= libarinc615a.a
 
+AR 			?= ar
+ARFLAGS		:= -rcv
 CXX 		?=
 CXXFLAGS 	:= -Wall -Werror -std=c++11 -pthread
 DBGFLAGS 	:= -g -ggdb
-TESTFLAGS 	:= -fprofile-arcs -ftest-coverage --coverage -lgcov
-LINKFLAGS 	:= -shared
-LDFLAGS  	:= -L$(DEP_PATH)/lib
-LDLIBS   	:= -larinc615a -ltransfer -ltftp -ltftpd -lcjson
+TESTFLAGS 	:= -fprofile-arcs -ftest-coverage --coverage
 
 COBJFLAGS 	:= $(CXXFLAGS) -c -fPIC
 test: COBJFLAGS 	+= $(TESTFLAGS)
-test: LINKFLAGS 	+= -lgcov
+test: LINKFLAGS 	+= -fprofile-arcs -lgcov
 debug: COBJFLAGS 	+= $(DBGFLAGS)
