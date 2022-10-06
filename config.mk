@@ -14,7 +14,7 @@ DBGFLAGS 	:= -g -ggdb
 TESTFLAGS 	:= -fprofile-arcs -ftest-coverage --coverage -lgcov
 LINKFLAGS 	:= -shared
 LDFLAGS  	:= -L$(DEP_PATH)/lib
-LDLIBS   	:= -larinc615a
+LDLIBS   	:= -larinc615a -ltransfer -ltftp -ltftpd -lcjson
 
 COBJFLAGS 	:= $(CXXFLAGS) -c -fPIC
 test: COBJFLAGS 	+= $(TESTFLAGS)

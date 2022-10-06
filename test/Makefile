@@ -39,7 +39,7 @@ CommunicationManager:
 	@echo "\n\n *** Compiling $@ *** \n\n"
 	cd .. && make test -j$(shell echo $$((`nproc`))) && make install
 
-$(TARGET): $(DEPS) $(OBJ)
+$(TARGET): $(OBJ)
 	@echo "\n\n *** Linking $@ *** \n\n"
 	$(CXX) $(CXXFLAGS) -o $@ $(OBJ) \
 	$(LINKFLAGS) $(INCFLAGS) $(LDFLAGS) $(LDLIBS)
@@ -55,6 +55,9 @@ makedir:
 
 .PHONY: all
 all: makedir $(TARGET)
+
+.PHONY: deps
+deps: makedir $(DEPS)
 
 .PHONY: debug
 debug: makedir $(TARGET)
