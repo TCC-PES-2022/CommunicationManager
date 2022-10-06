@@ -67,12 +67,12 @@ static FindOperationResult findNewDeviceCbk(
     return FindOperationResult::FIND_OPERATION_ERROR;
 }
 
-static UploadOperationResult uploadInitializationResponseCbk (
+static UploadOperationResult uploadInitializationResponseCbk(
     std::string uploadInitializationResponseJson,
     std::shared_ptr<void> context)
 {
     auto handler = std::static_pointer_cast<struct CommunicationHandler>(context);
-    if (handler->_uploadInitializationResponseCallback != nullptr)
+    if (handler != nullptr && handler->_uploadInitializationResponseCallback != nullptr)
     {
         handler->_uploadInitializationResponseCallback(handler.get(),
                                                        uploadInitializationResponseJson.c_str(),
@@ -82,12 +82,12 @@ static UploadOperationResult uploadInitializationResponseCbk (
     return UploadOperationResult::UPLOAD_OPERATION_ERROR;
 }
 
-static UploadOperationResult uploadInformationStatusCbk (
+static UploadOperationResult uploadInformationStatusCbk(
     std::string uploadInformationStatusJson,
     std::shared_ptr<void> context)
 {
     auto handler = std::static_pointer_cast<struct CommunicationHandler>(context);
-    if (handler->_uploadInformationStatusCallback != nullptr)
+    if (handler != nullptr && handler->_uploadInformationStatusCallback != nullptr)
     {
         handler->_uploadInformationStatusCallback(handler.get(),
                                                   uploadInformationStatusJson.c_str(),
@@ -97,12 +97,12 @@ static UploadOperationResult uploadInformationStatusCbk (
     return UploadOperationResult::UPLOAD_OPERATION_ERROR;
 }
 
-static UploadOperationResult fileNotAvailableCbk (
+static UploadOperationResult fileNotAvailableCbk(
     uint16_t *waitTimeS,
     std::shared_ptr<void> context)
 {
     auto handler = std::static_pointer_cast<struct CommunicationHandler>(context);
-    if (handler->_fileNotAvailableCallback != nullptr)
+    if (handler != nullptr && handler->_fileNotAvailableCallback != nullptr)
     {
         unsigned short waitTime = 0;
         handler->_fileNotAvailableCallback(handler.get(),
