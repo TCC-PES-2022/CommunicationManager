@@ -39,16 +39,16 @@ protected:
         if (bcModulePid != 0)
         {
             kill(bcModulePid, SIGINT);
+            waitpid(bcModulePid, NULL, 0);
         }
     }
 
     void startBCModule()
     {
-        return;
         bcModulePid = fork();
+        printf("\n\n bcModulePid = %d \n\n", bcModulePid);
         if (bcModulePid == 0)
         {
-            setenv("LD_LIBRARY_PATH", "/opt/fls/lib", 1);
             char *args[] = {"bcmodule", NULL};
             execv("bcmodule", args);
             printf("Error starting B/C Module");
