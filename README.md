@@ -12,7 +12,7 @@ To clone this repository, run:
 
 Before building your project, you may need to install some dependencies. To do so, run:
 
-    sudo apt install -y build-essential
+    sudo apt install -y build-essential lcov
 
 Export the instalation path to the environment:
     export DESTDIR=<path_to_install>
