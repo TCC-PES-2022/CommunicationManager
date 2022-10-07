@@ -43,15 +43,15 @@ protected:
         }
     }
 
-    void startBCModule()
+    void startBLModule()
     {
         bcModulePid = fork();
         printf("\n\n bcModulePid = %d \n\n", bcModulePid);
         if (bcModulePid == 0)
         {
-            char *args[] = {"bcmodule", NULL};
-            execv("bcmodule", args);
-            printf("Error starting B/C Module");
+            char *args[] = {"blmodule", NULL};
+            execv("blmodule", args);
+            printf("Error starting B/L Module");
         }
         else if (bcModulePid < 0)
         {
@@ -132,7 +132,7 @@ TEST_F(CommunicationManagerUploadTest, RegisterFileNotAvailableCallback)
 TEST_F(CommunicationManagerUploadTest, UploadAccepted)
 {
     bool uploadAccepted = false;
-    startBCModule();
+    startBLModule();
 
     upload_initialization_response_callback callback = [](CommunicationHandlerPtr handler,
                                                           const char *device,
@@ -166,7 +166,7 @@ TEST_F(CommunicationManagerUploadTest, UploadAccepted)
 TEST_F(CommunicationManagerUploadTest, StatusMessageReceived)
 {
     bool statusMessageReceived = false;
-    startBCModule();
+    startBLModule();
 
     upload_information_status_callback callback = [](CommunicationHandlerPtr handler,
                                                      const char *upload_information_status_json,
@@ -190,7 +190,7 @@ TEST_F(CommunicationManagerUploadTest, StatusMessageReceived)
 TEST_F(CommunicationManagerUploadTest, UploadSuccess)
 {
     bool uploadSuccess = false;
-    startBCModule();
+    startBLModule();
 
     upload_information_status_callback callback = [](CommunicationHandlerPtr handler,
                                                      const char *upload_information_status_json,
