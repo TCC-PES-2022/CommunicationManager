@@ -20,19 +20,25 @@ Export the instalation path to the environment:
 You can also define this variable in your `.bashrc` file. or when calling any make rule. The default installation path is `/tmp`.
 
 To build, run:
+
     make deps && make
 
 To install, run:
+
     make install
 
 To test, first build gtest:
+
     cd test && make gtest
 
 Make sure blmodule have exeution permission:
+
     chmod +x blmodule
 
 Then run:
+
     make deps && make && make runtests
 
 To generate test coverage, run:
+
     make report
