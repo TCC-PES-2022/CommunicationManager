@@ -46,7 +46,6 @@ protected:
     void startBLModule()
     {
         bcModulePid = fork();
-        printf("\n\n bcModulePid = %d \n\n", bcModulePid);
         if (bcModulePid == 0)
         {
             char *args[] = {"blmodule", NULL};
