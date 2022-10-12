@@ -6,3 +6,7 @@
 	path = test/googletest
 	url = https://github.com/google/googletest.git
 	branch = v1.12.x
+[submodule "modules/BLSecurityManager"]
+	path = modules/BLSecurityManager
+	url = https://github.com/TCC-PES-2022/BLSecurityManager.git
+	branch = main
