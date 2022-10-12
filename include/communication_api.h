@@ -33,6 +33,11 @@ typedef struct
     char partNumber[MAX_NAME_SIZE];
 } Load;
 
+typedef struct
+{
+    char certificatePath[MAX_NAME_SIZE];
+} Certificate;
+
 /*
 *******************************************************************************
                                    CALLBACKS
@@ -200,6 +205,21 @@ CommunicationOperationResult set_tftp_dataloader_server_port(
  */
 CommunicationOperationResult set_tftp_targethardware_server_port(
     CommunicationHandlerPtr handler, unsigned short port);
+
+/**
+ * @brief Set certificate path. This is the certificate to be used for 
+ *        authentication.  
+ *
+ *        This function must be called before upload operation.
+ *
+ * @param[in] handler the communication handler.
+ * @param[in] certificate the certificate path.
+ *
+ * @return COMMUNICATION_OPERATION_OK if success.
+ * @return COMMUNICATION_OPERATION_ERROR otherwise.
+ */
+CommunicationOperationResult set_certificate(
+    CommunicationHandlerPtr handler, Certificate certificate);
 
 /*
 *******************************************************************************
