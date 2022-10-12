@@ -35,7 +35,7 @@ CommunicationOperationResult CommunicationManager::setTftpTargetHardwareServerPo
 }
 
 CommunicationOperationResult CommunicationManager::registerFindStartedCallback(
-    findStarted callback, std::shared_ptr<void> context)
+    findStarted callback, void *context)
 {
     return finder->registerFindStartedCallback(callback, context) == FindOperationResult::FIND_OPERATION_OK
                ? COMMUNICATION_OPERATION_OK
@@ -43,7 +43,7 @@ CommunicationOperationResult CommunicationManager::registerFindStartedCallback(
 }
 
 CommunicationOperationResult CommunicationManager::registerFindFinishedCallback(
-    findFinished callback, std::shared_ptr<void> context)
+    findFinished callback, void *context)
 {
     return finder->registerFindFinishedCallback(callback, context) == FindOperationResult::FIND_OPERATION_OK
                ? COMMUNICATION_OPERATION_OK
@@ -51,7 +51,7 @@ CommunicationOperationResult CommunicationManager::registerFindFinishedCallback(
 }
 
 CommunicationOperationResult CommunicationManager::registerFindNewDeviceCallback(
-    findNewDevice callback, std::shared_ptr<void> context)
+    findNewDevice callback, void *context)
 {
     return finder->registerFindNewDeviceCallback(callback, context) == FindOperationResult::FIND_OPERATION_OK
                ? COMMUNICATION_OPERATION_OK
@@ -109,7 +109,7 @@ CommunicationOperationResult CommunicationManager::setLoadList(
 
 CommunicationOperationResult
 CommunicationManager::registerUploadInitializationResponseCallback(
-    uploadInitializationResponseCallback callback, std::shared_ptr<void> context)
+    uploadInitializationResponseCallback callback, void *context)
 {
     return uploader->registerUploadInitializationResponseCallback(callback, context) == UploadOperationResult::UPLOAD_OPERATION_OK
                ? COMMUNICATION_OPERATION_OK
@@ -118,7 +118,7 @@ CommunicationManager::registerUploadInitializationResponseCallback(
 
 CommunicationOperationResult
 CommunicationManager::registerUploadInformationStatusCallback(
-    uploadInformationStatusCallback callback, std::shared_ptr<void> context)
+    uploadInformationStatusCallback callback, void *context)
 {
     return uploader->registerUploadInformationStatusCallback(callback, context) == UploadOperationResult::UPLOAD_OPERATION_OK
                ? COMMUNICATION_OPERATION_OK
@@ -127,7 +127,7 @@ CommunicationManager::registerUploadInformationStatusCallback(
 
 CommunicationOperationResult
 CommunicationManager::registerFileNotAvailableCallback(
-    fileNotAvailableCallback callback, std::shared_ptr<void> context)
+    fileNotAvailableCallback callback, void *context)
 {
     return uploader->registerFileNotAvailableCallback(callback, context) == UploadOperationResult::UPLOAD_OPERATION_OK
                ? COMMUNICATION_OPERATION_OK

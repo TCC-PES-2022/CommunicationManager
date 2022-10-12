@@ -125,11 +125,14 @@ typedef CommunicationOperationResult (*upload_information_status_callback)(
     void *context);
 
 /**
- * @brief Callback for file not available.
+ * @brief Callback for file not available. This callback is called for both
+ *        authentication and upload operations.
  *
  * //TODO: document the JSON format.
+ * //TODO: pass file name as callback parameter.
  *
  * @param[in] handler the communication handler.
+ * @param[in] file_name the file name.
  * @param[out] wait_time_s time to wait in seconds before next try.
  * @param[in] context the user context.
  *
@@ -138,6 +141,7 @@ typedef CommunicationOperationResult (*upload_information_status_callback)(
  */
 typedef CommunicationOperationResult (*file_not_available_callback)(
     CommunicationHandlerPtr handler,
+    const char *file_name,
     unsigned short *wait_time_s,
     void *context);
 

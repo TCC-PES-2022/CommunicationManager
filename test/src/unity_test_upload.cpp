@@ -118,6 +118,7 @@ TEST_F(CommunicationManagerUploadTest, RegisterUploadInformationStatusCallback)
 TEST_F(CommunicationManagerUploadTest, RegisterFileNotAvailableCallback)
 {
     file_not_available_callback callback = [](CommunicationHandlerPtr handler,
+                                              const char *file_name,
                                               unsigned short *wait_time_s,
                                               void *context) -> CommunicationOperationResult
     {

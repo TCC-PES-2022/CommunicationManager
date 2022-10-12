@@ -26,15 +26,15 @@ struct CommunicationHandler
 };
 
 // TODO: we may limit the number of handlers here, but for now we don't.
-std::unordered_map<unsigned long, std::shared_ptr<struct CommunicationHandler>> handlers;
+std::unordered_map<unsigned long, struct CommunicationHandler *> handlers;
 
 static FindOperationResult findStartedCbk(
-    std::shared_ptr<void> context)
+    void *context)
 {
-    auto handler = std::static_pointer_cast<struct CommunicationHandler>(context);
+    auto handler = (struct CommunicationHandler *)context;
     if (handler->_findStartedCallback != nullptr)
     {
-        handler->_findStartedCallback(handler.get(),
+        handler->_findStartedCallback(handler,
                                       handler->_findStartedContext);
         return FindOperationResult::FIND_OPERATION_OK;
     }
@@ -42,12 +42,12 @@ static FindOperationResult findStartedCbk(
 }
 
 static FindOperationResult findFinishedCbk(
-    std::shared_ptr<void> context)
+    void *context)
 {
-    auto handler = std::static_pointer_cast<struct CommunicationHandler>(context);
+    auto handler = (struct CommunicationHandler *)context;
     if (handler->_findFinishedCallback != nullptr)
     {
-        handler->_findFinishedCallback(handler.get(),
+        handler->_findFinishedCallback(handler,
                                        handler->_findFinishedContext);
         return FindOperationResult::FIND_OPERATION_OK;
     }
@@ -56,12 +56,12 @@ static FindOperationResult findFinishedCbk(
 
 static FindOperationResult findNewDeviceCbk(
     std::string device,
-    std::shared_ptr<void> context)
+    void *context)
 {
-    auto handler = std::static_pointer_cast<struct CommunicationHandler>(context);
+    auto handler = (struct CommunicationHandler *)context;
     if (handler->_findNewDeviceCallback != nullptr)
     {
-        handler->_findNewDeviceCallback(handler.get(),
+        handler->_findNewDeviceCallback(handler,
                                         device.c_str(),
                                         handler->_findNewDeviceContext);
         return FindOperationResult::FIND_OPERATION_OK;
@@ -71,12 +71,12 @@ static FindOperationResult findNewDeviceCbk(
 
 static UploadOperationResult uploadInitializationResponseCbk(
     std::string uploadInitializationResponseJson,
-    std::shared_ptr<void> context)
+    void *context)
 {
-    auto handler = std::static_pointer_cast<struct CommunicationHandler>(context);
+    auto handler = (struct CommunicationHandler *)context;
     if (handler != nullptr && handler->_uploadInitializationResponseCallback != nullptr)
     {
-        handler->_uploadInitializationResponseCallback(handler.get(),
+        handler->_uploadInitializationResponseCallback(handler,
                                                        uploadInitializationResponseJson.c_str(),
                                                        handler->_uploadInitializationResponseContext);
         return UploadOperationResult::UPLOAD_OPERATION_OK;
@@ -86,12 +86,12 @@ static UploadOperationResult uploadInitializationResponseCbk(
 
 static UploadOperationResult uploadInformationStatusCbk(
     std::string uploadInformationStatusJson,
-    std::shared_ptr<void> context)
+    void *context)
 {
-    auto handler = std::static_pointer_cast<struct CommunicationHandler>(context);
+    auto handler = (struct CommunicationHandler *)context;
     if (handler != nullptr && handler->_uploadInformationStatusCallback != nullptr)
     {
-        handler->_uploadInformationStatusCallback(handler.get(),
+        handler->_uploadInformationStatusCallback(handler,
                                                   uploadInformationStatusJson.c_str(),
                                                   handler->_uploadInformationStatusContext);
         return UploadOperationResult::UPLOAD_OPERATION_OK;
@@ -100,14 +100,16 @@ static UploadOperationResult uploadInformationStatusCbk(
 }
 
 static UploadOperationResult fileNotAvailableCbk(
+    std::string fileName,
     uint16_t *waitTimeS,
-    std::shared_ptr<void> context)
+    void *context)
 {
-    auto handler = std::static_pointer_cast<struct CommunicationHandler>(context);
+    auto handler = (struct CommunicationHandler *)context;
     if (handler != nullptr && handler->_fileNotAvailableCallback != nullptr)
     {
         unsigned short waitTime = 0;
-        handler->_fileNotAvailableCallback(handler.get(),
+        handler->_fileNotAvailableCallback(handler,
+                                           fileName.c_str(),
                                            &waitTime,
                                            handler->_fileNotAvailableContext);
         *waitTimeS = waitTime;

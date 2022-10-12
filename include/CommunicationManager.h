@@ -70,7 +70,7 @@ public:
      */
     CommunicationOperationResult registerFindStartedCallback(
         findStarted callback,
-        std::shared_ptr<void> context);
+         void *context);
 
     /**
      * @brief Register find finished callback.
@@ -83,7 +83,7 @@ public:
      */
     CommunicationOperationResult registerFindFinishedCallback(
         findFinished callback,
-        std::shared_ptr<void> context);
+         void *context);
 
     /**
      * @brief Register find new device callback.
@@ -96,7 +96,7 @@ public:
      */
     CommunicationOperationResult registerFindNewDeviceCallback(
         findNewDevice callback,
-        std::shared_ptr<void> context);
+         void *context);
 
     /**
      * @brief Start find operation. This is a non-blocking function.
@@ -172,7 +172,7 @@ public:
      */
     CommunicationOperationResult registerUploadInitializationResponseCallback(
         uploadInitializationResponseCallback callback,
-        std::shared_ptr<void> context);
+         void *context);
 
     /**
      * Register a callback for upload information status.
@@ -185,7 +185,7 @@ public:
      */
     CommunicationOperationResult registerUploadInformationStatusCallback(
         uploadInformationStatusCallback callback,
-        std::shared_ptr<void> context);
+         void *context);
 
     /**
      * Register a callback for file not available.
@@ -198,7 +198,7 @@ public:
      */
     CommunicationOperationResult registerFileNotAvailableCallback(
         fileNotAvailableCallback callback,
-        std::shared_ptr<void> context);
+         void *context);
 
     /**
      * @brief Start upload operation. This method must called by the dataloader
