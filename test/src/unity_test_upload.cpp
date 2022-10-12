@@ -5,8 +5,8 @@
 #include "LoadUploadStatusFileARINC615A.h"
 #include <cjson/cJSON.h>
 
-#define DATALOADER_SERVER_PORT      5959
-#define TARGETHARDWARE_SERVER_PORT  59595
+#define DATALOADER_SERVER_PORT 5959
+#define TARGETHARDWARE_SERVER_PORT 59595
 
 class CommunicationManagerUploadTest : public ::testing::Test
 {
@@ -28,7 +28,7 @@ protected:
         set_tftp_dataloader_server_port(handler, DATALOADER_SERVER_PORT);
         set_tftp_targethardware_server_port(handler, TARGETHARDWARE_SERVER_PORT);
 
-        bcModulePid = 0;
+        blModulePid = 0;
     }
 
     void TearDown() override
@@ -36,23 +36,24 @@ protected:
         destroy_handler(&handler);
         ASSERT_EQ(handler, nullptr);
 
-        if (bcModulePid != 0)
+        if (blModulePid != 0)
         {
-            kill(bcModulePid, SIGINT);
-            waitpid(bcModulePid, NULL, 0);
+            kill(blModulePid, SIGINT);
+            waitpid(blModulePid, NULL, 0);
         }
     }
 
     void startBLModule()
     {
-        bcModulePid = fork();
-        if (bcModulePid == 0)
+        blModulePid = fork();
+        printf("blModulePid: %d\n", blModulePid);
+        if (blModulePid == 0)
         {
             char *args[] = {"blmodule", NULL};
             execv("blmodule", args);
             printf("Error starting B/L Module");
         }
-        else if (bcModulePid < 0)
+        else if (blModulePid < 0)
         {
             printf("Error forking process");
         }
@@ -80,13 +81,15 @@ protected:
         set_load_list(handler, loads, 4);
     }
 
-    void authenticate()
+    void setCertificate()
     {
-        // TODO: implement
+        Certificate certificate;
+        strcpy(certificate.certificatePath, "certificate/pes.crt");
+        set_certificate(handler, certificate);
     }
 
     CommunicationHandlerPtr handler;
-    pid_t bcModulePid;
+    pid_t blModulePid;
 };
 
 TEST_F(CommunicationManagerUploadTest, RegisterUploadInitializationResponseCallback)
@@ -157,7 +160,7 @@ TEST_F(CommunicationManagerUploadTest, UploadAccepted)
 
     configTargetHardware();
     setLoadList();
-    authenticate();
+    setCertificate();
 
     upload(handler);
     ASSERT_TRUE(uploadAccepted);
@@ -181,7 +184,7 @@ TEST_F(CommunicationManagerUploadTest, StatusMessageReceived)
 
     configTargetHardware();
     setLoadList();
-    authenticate();
+    setCertificate();
 
     upload(handler);
     ASSERT_TRUE(statusMessageReceived);
@@ -216,7 +219,7 @@ TEST_F(CommunicationManagerUploadTest, UploadSuccess)
 
     configTargetHardware();
     setLoadList();
-    authenticate();
+    setCertificate();
 
     CommunicationOperationResult result = upload(handler);
     ASSERT_EQ(result, COMMUNICATION_OPERATION_OK);
