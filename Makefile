@@ -34,7 +34,7 @@ $(DEPS): $@
 # LIB_DEPS_COMPLETE := $(addprefix $(DEP_PATH)/lib/,$(LIB_DEPS))
 $(OUT_PATH)/libcommunicationmanager.a: $(OBJ)
 	@echo "Linking $@"
-	$(AR) $(ARFLAGS) $(TARGET) $(OBJ)
+	$(AR) $(ARFLAGS) $@ $(OBJ)
 	# $(AR) $(ARFLAGS) libtmp.a $(OBJ)
 	# echo "create $@" > lib.mri
 	# echo "addlib libtmp.a" >> lib.mri
