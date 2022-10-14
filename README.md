@@ -6,18 +6,18 @@ This repository is part of project [ARIEL](https://github.com/TCC-PES-2022).
 
 To clone this repository, run:
 
-    git clone https://github.com/TCC-PES-2022/CommunicationManager.
+    git clone https://github.com/TCC-PES-2022/CommunicationManager.git
     cd CommunicationManager
     git submodule update --init --recursive
 
 Before building your project, you may need to install some dependencies. To do so, run:
 
     sudo apt update
-    sudo apt install -y build-essential libcjson-dev libgcrypt-dev
+    sudo apt install -y --allow-downgrades build-essential=12.9ubuntu3 libcjson-dev=1.7.15-1 libgcrypt20-dev=1.9.4-3ubuntu3 openssl=3.0.2-0ubuntu1 libtinyxml2-dev=9.0.0+dfsg-3
     
 For tests, you'll also need
     
-    sudo apt install -y libgtest-dev cmake lcov
+    sudo apt install -y libgtest-dev=1.11.0-3 cmake-data=3.22.1-1ubuntu1 cmake=3.22.1-1ubuntu1 lcov=1.15-1
 
 Export the instalation path to the environment:
     export DESTDIR=<path_to_install>
