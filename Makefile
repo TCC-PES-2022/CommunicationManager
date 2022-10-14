@@ -6,8 +6,8 @@ OBJ_PATH := obj
 SRC_PATH := src
 INCLUDE_PATH := include
 
-TARGET_NAME := libcommunicationmanager.a
-TARGET := $(OUT_PATH)/$(TARGET_NAME)
+TARGET_NAME := libcommunicationmanager.a libcommunicationmanager.so
+TARGET := $(addprefix $(OUT_PATH)/, $(TARGET_NAME))
 
 INCDIRS := $(addprefix -I,$(shell find $(INCLUDE_PATH) -type d -print))
 INCDIRS += $(addprefix -I,$(DEP_PATH)/include)
@@ -32,7 +32,7 @@ $(DEPS): $@
 	$(MAKE) install DESTDIR=$(DEP_PATH)
 
 # LIB_DEPS_COMPLETE := $(addprefix $(DEP_PATH)/lib/,$(LIB_DEPS))
-$(TARGET): $(OBJ)
+$(OUT_PATH)/libcommunicationmanager.a: $(OBJ)
 	@echo "Linking $@"
 	$(AR) $(ARFLAGS) $(TARGET) $(OBJ)
 	# $(AR) $(ARFLAGS) libtmp.a $(OBJ)
@@ -45,6 +45,10 @@ $(TARGET): $(OBJ)
 	# rm libtmp.a
 	# rm lib.mri
 	# ranlib $@
+
+$(OUT_PATH)/libcommunicationmanager.so: $(OBJ)
+	@echo "Linking $@"
+	$(CC) -o $@ $(LINKFLAGS) $(OBJ) $(CFLAGS)
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c*
 	@echo "Building $<"
@@ -60,8 +64,6 @@ deps: $(DEPS)
 
 .PHONY: all
 all: makedir $(TARGET)
-	strip --strip-unneeded $(TARGET)
-	ranlib $(TARGET)
 
 .PHONY: test
 test: makedir $(TARGET)

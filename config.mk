@@ -5,7 +5,7 @@ VERSION = 0.1
 DESTDIR 	?= /tmp
 DEP_PATH 	?= $(DESTDIR)
 
-DEPS 		:= ARINC615AManager
+DEPS 		:= ARINC615AManager BLSecurityManager
 # LIB_DEPS	:= libarinc615a.a
 
 AR 			?= ar
@@ -14,6 +14,7 @@ CXX 		?=
 CXXFLAGS 	:= -Wall -Werror -std=c++11 -pthread
 DBGFLAGS 	:= -g -ggdb
 TESTFLAGS 	:= -fprofile-arcs -ftest-coverage --coverage
+LINKFLAGS 	:= -shared
 
 COBJFLAGS 	:= $(CXXFLAGS) -c -fPIC
 test: COBJFLAGS 	+= $(TESTFLAGS)

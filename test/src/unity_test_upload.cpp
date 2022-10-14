@@ -50,6 +50,7 @@ protected:
         if (blModulePid == 0)
         {
             char *args[] = {"blmodule", NULL};
+            setenv("LD_LIBRARY_PATH", "lib", 1);
             execv("blmodule", args);
             printf("Error starting B/L Module");
         }
