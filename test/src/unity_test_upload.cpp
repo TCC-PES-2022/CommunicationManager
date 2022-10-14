@@ -85,7 +85,7 @@ protected:
     void setCertificate()
     {
         Certificate certificate;
-        strcpy(certificate.certificatePath, "certificate/pes.crt");
+        strcpy(certificate.certificatePath, "certificate/pescert.crt");
         set_certificate(handler, certificate);
     }
 

@@ -63,7 +63,7 @@ protected:
     void setCertificate()
     {
         Certificate certificate;
-        strcpy(certificate.certificatePath, "certificate/pes.crt");
+        strcpy(certificate.certificatePath, "certificate/pescert.crt");
         authenticator->setCertificate(certificate);
     }
 
@@ -88,7 +88,7 @@ TEST_F(CommunicationManagerAuthenticationTest, AuthenticationFail)
     configTargetHardware();
 
     Certificate certificate;
-    strcpy(certificate.certificatePath, "certificate/invalid_pes.crt");
+    strcpy(certificate.certificatePath, "certificate/invalid_pescert.crt");
     authenticator->setCertificate(certificate);
 
     ASSERT_EQ(authenticator->authenticate(), COMMUNICATION_OPERATION_ERROR);
