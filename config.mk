@@ -9,7 +9,7 @@ DEPS 		:= ARINC615AManager BLSecurityManager
 # LIB_DEPS	:= libarinc615a.a
 
 AR 			?= ar
-ARFLAGS		:= -rcv
+ARFLAGS		:= -rcvs
 CXX 		?=
 CXXFLAGS 	:= -Wall -Werror -std=c++11 -pthread
 DBGFLAGS 	:= -g -ggdb
