@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "communication_api.h"
+#include "icommunicationmanager.h"
 #include "InitializationFileARINC615A.h"
 #include "LoadUploadStatusFileARINC615A.h"
 #include <cjson/cJSON.h>

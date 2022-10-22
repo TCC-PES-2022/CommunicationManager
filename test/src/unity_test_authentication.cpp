@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "communication_api.h"
+#include "icommunicationmanager.h"
 #include "AuthenticationManager.h"
 #include <cjson/cJSON.h>
 

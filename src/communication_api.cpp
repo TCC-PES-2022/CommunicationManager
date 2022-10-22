@@ -1,4 +1,4 @@
-#include "communication_api.h"
+#include "icommunicationmanager.h"
 #include "AuthenticationManager.h"
 #include "CommunicationManager.h"
 

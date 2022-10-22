@@ -1,7 +1,7 @@
 #ifndef COMMUNICATION_MANAGER_H
 #define COMMUNICATION_MANAGER_H
 
-#include "communication_api.h"
+#include "icommunicationmanager.h"
 #include "UploadDataLoaderARINC615A.h"
 #include "FindARINC615A.h"
 

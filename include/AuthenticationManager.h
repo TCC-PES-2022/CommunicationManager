@@ -1,7 +1,7 @@
 #ifndef AUTHENTICATION_MANAGER_H
 #define AUTHENTICATION_MANAGER_H
 
-#include "communication_api.h"
+#include "icommunicationmanager.h"
 #include "AuthenticationDataLoader.h"
 
 class AuthenticationManager

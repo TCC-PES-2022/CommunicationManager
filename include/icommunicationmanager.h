@@ -1,5 +1,5 @@
-#ifndef COMMUNICATION_API_H
-#define COMMUNICATION_API_H
+#ifndef ICOMMUNICATION_MANAGER_H
+#define ICOMMUNICATION_MANAGER_H
 
 #include <stdlib.h>
 
@@ -425,4 +425,4 @@ CommunicationOperationResult upload(CommunicationHandlerPtr handler);
 CommunicationOperationResult abort_upload(
     CommunicationHandlerPtr handler, AbortSource abortSource);
 
-#endif // COMMUNICATION_API_H
+#endif // ICOMMUNICATION_MANAGER_H

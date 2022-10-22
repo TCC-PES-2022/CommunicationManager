@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "communication_api.h"
+#include "icommunicationmanager.h"
 
 class CommunicationManagerBasicTest : public ::testing::Test
 {
