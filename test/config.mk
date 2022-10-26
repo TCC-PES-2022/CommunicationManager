@@ -12,9 +12,8 @@ CXXFLAGS		+= -pthread
 CXXFLAGS 		+= -fprofile-arcs -ftest-coverage --coverage
 COBJFLAGS 		:= $(CXXFLAGS) -c
 LDFLAGS  		:= -L$(DEP_PATH)/lib
-LDLIBS   		:= -lcommunicationmanager -larinc615a -ltransfer -ltftp -ltftpd 
-LDLIBS 			+= -lblsecurity -lgcrypt -lgpg-error -lgtest -lcjson
-LDLIBS			+= -lgcov -lpthread -fprofile-arcs 
+LDLIBS   		:= -lcommunicationmanager -larinc615a -ltransfer -ltftp -ltftpd -lblsecurity 
+LDLIBS 			+= -lgcrypt -lgpg-error -lgtest -lgcov -lpthread -lcjson
 INCFLAGS 		:= -I$(DEP_PATH)/include
 
 debug: COBJFLAGS 		+= $(DBGFLAGS)

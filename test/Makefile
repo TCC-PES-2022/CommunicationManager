@@ -66,7 +66,8 @@ debug: makedir $(TARGET)
 
 .PHONY: runtests
 runtests:
-	LD_LIBRARY_PATH=$(DEP_PATH)/lib ./$(TARGET)
+	# LD_LIBRARY_PATH=$(DEP_PATH)/lib ./$(TARGET)
+	./$(TARGET)
 
 .PHONY: report
 report:
