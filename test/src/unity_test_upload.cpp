@@ -226,3 +226,41 @@ TEST_F(CommunicationManagerUploadTest, UploadSuccess)
     ASSERT_EQ(result, COMMUNICATION_OPERATION_OK);
     ASSERT_TRUE(uploadSuccess);
 }
+
+TEST_F(CommunicationManagerUploadTest, UploadFailNoAuthentication)
+{
+    bool uploadSuccess = false;
+    startBLModule();
+
+    upload_information_status_callback callback = [](CommunicationHandlerPtr handler,
+                                                     const char *upload_information_status_json,
+                                                     void *context) -> CommunicationOperationResult
+    {
+        cJSON *json = cJSON_Parse(upload_information_status_json);
+        if (json == nullptr)
+        {
+            return COMMUNICATION_OPERATION_ERROR;
+        }
+        cJSON *jsonOperationAcceptanceStatusCode = cJSON_GetObjectItemCaseSensitive(json, "uploadOperationStatusCode");
+        if (jsonOperationAcceptanceStatusCode == nullptr)
+        {
+            return COMMUNICATION_OPERATION_ERROR;
+        }
+        bool *uploadSuccess = (bool *)context;
+        uint16_t statusCode = jsonOperationAcceptanceStatusCode->valueint;
+        *uploadSuccess = statusCode == STATUS_UPLOAD_COMPLETED;
+        return COMMUNICATION_OPERATION_OK;
+    };
+
+    register_upload_information_status_callback(handler, callback, &uploadSuccess);
+
+    configTargetHardware();
+    setLoadList();
+
+    // Do not set certificate so upload will fail
+    // setCertificate();
+
+    CommunicationOperationResult result = upload(handler);
+    ASSERT_EQ(result, COMMUNICATION_OPERATION_ERROR);
+    ASSERT_FALSE(uploadSuccess);
+}
