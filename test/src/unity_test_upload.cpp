@@ -264,3 +264,49 @@ TEST_F(CommunicationManagerUploadTest, UploadFailNoAuthentication)
     ASSERT_EQ(result, COMMUNICATION_OPERATION_ERROR);
     ASSERT_FALSE(uploadSuccess);
 }
+
+TEST_F(CommunicationManagerUploadTest, UploadFailTransmissionError)
+{
+    bool uploadAbortedByTargetHardware = false;
+    startBLModule();
+
+    upload_information_status_callback callback = [](CommunicationHandlerPtr handler,
+                                                     const char *upload_information_status_json,
+                                                     void *context) -> CommunicationOperationResult
+    {
+        cJSON *json = cJSON_Parse(upload_information_status_json);
+        if (json == nullptr)
+        {
+            return COMMUNICATION_OPERATION_ERROR;
+        }
+        cJSON *jsonOperationAcceptanceStatusCode = cJSON_GetObjectItemCaseSensitive(json, "uploadOperationStatusCode");
+        if (jsonOperationAcceptanceStatusCode == nullptr)
+        {
+            return COMMUNICATION_OPERATION_ERROR;
+        }
+        bool *uploadAbortedByTargetHardware = (bool *)context;
+        uint16_t statusCode = jsonOperationAcceptanceStatusCode->valueint;
+        *uploadAbortedByTargetHardware = statusCode == STATUS_UPLOAD_ABORTED_BY_THE_TARGET_HARDWARE;
+        return COMMUNICATION_OPERATION_OK;
+    };
+
+    register_upload_information_status_callback(handler, callback, &uploadAbortedByTargetHardware);
+
+    configTargetHardware();
+
+    // Do not send compatibility file so upload will fail
+    Load loads[4];
+    strcpy(loads[0].loadName, "images/00000001_56.bin");
+    strcpy(loads[0].partNumber, "00000001");
+    strcpy(loads[1].loadName, "images/00000002_56.bin");
+    strcpy(loads[1].partNumber, "00000002");
+    strcpy(loads[2].loadName, "images/00000003_56.bin");
+    strcpy(loads[2].partNumber, "00000003");
+    set_load_list(handler, loads, 3);
+
+    setCertificate();
+
+    CommunicationOperationResult result = upload(handler);
+    ASSERT_EQ(result, COMMUNICATION_OPERATION_ERROR);
+    ASSERT_TRUE(uploadAbortedByTargetHardware);
+}
