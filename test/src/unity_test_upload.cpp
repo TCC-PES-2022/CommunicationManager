@@ -70,11 +70,11 @@ protected:
     void setLoadList()
     {
         Load loads[4];
-        strcpy(loads[0].loadName, "images/load1.bin");
+        strcpy(loads[0].loadName, "images/00000001_56.bin");
         strcpy(loads[0].partNumber, "00000001");
-        strcpy(loads[1].loadName, "images/load2.bin");
+        strcpy(loads[1].loadName, "images/00000002_56.bin");
         strcpy(loads[1].partNumber, "00000002");
-        strcpy(loads[2].loadName, "images/load3.bin");
+        strcpy(loads[2].loadName, "images/00000003_56.bin");
         strcpy(loads[2].partNumber, "00000003");
         strcpy(loads[3].loadName, "images/ARQ_Compatibilidade.xml");
         strcpy(loads[3].partNumber, "00000000");
