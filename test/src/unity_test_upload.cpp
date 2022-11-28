@@ -310,3 +310,57 @@ TEST_F(CommunicationManagerUploadTest, UploadFailTransmissionError)
     ASSERT_EQ(result, COMMUNICATION_OPERATION_ERROR);
     ASSERT_TRUE(uploadAbortedByTargetHardware);
 }
+
+TEST_F(CommunicationManagerUploadTest, UploadAbortedByOperator)
+{
+    bool uploadAbortedByOperator = false;
+    CommunicationOperationResult abortResult;
+    startBLModule();
+
+    upload_information_status_callback callback = [](CommunicationHandlerPtr handler,
+                                                     const char *upload_information_status_json,
+                                                     void *context) -> CommunicationOperationResult
+    {
+        static bool sendAbort = true;
+        cJSON *json = cJSON_Parse(upload_information_status_json);
+        if (json == nullptr)
+        {
+            return COMMUNICATION_OPERATION_ERROR;
+        }
+        cJSON *jsonOperationAcceptanceStatusCode = cJSON_GetObjectItemCaseSensitive(json, "uploadOperationStatusCode");
+        if (jsonOperationAcceptanceStatusCode == nullptr)
+        {
+            return COMMUNICATION_OPERATION_ERROR;
+        }
+        uint16_t statusCode = jsonOperationAcceptanceStatusCode->valueint;
+        if (statusCode == STATUS_UPLOAD_IN_PROGRESS || statusCode == STATUS_UPLOAD_IN_PROGRESS_WITH_DESCRIPTION)
+        {
+            if (sendAbort)
+            {
+                //TODO: Sending more than once, the te TargetHardware will abort the operation, is this a bug?
+                sendAbort = false;
+                abort_upload(handler, OPERATION_ABORTED_BY_THE_OPERATOR);
+            }
+        }
+        else
+        {   
+            bool *uploadAbortedByOperator = (bool *)context;
+            *uploadAbortedByOperator = statusCode == STATUS_UPLOAD_ABORTED_IN_THE_TARGET_OP_REQUEST;
+        }
+        return COMMUNICATION_OPERATION_OK;
+    };
+
+    register_upload_information_status_callback(handler, callback, &uploadAbortedByOperator);
+
+    configTargetHardware();
+    Load loads[2];
+    strcpy(loads[0].loadName, "images/00000004_20000036.bin");
+    strcpy(loads[0].partNumber, "00000004");
+    strcpy(loads[1].loadName, "images/ARQ_Compatibilidade.xml");
+    strcpy(loads[1].partNumber, "00000000");
+    set_load_list(handler, loads, 2);
+    setCertificate();
+
+    ASSERT_EQ(COMMUNICATION_OPERATION_ERROR, upload(handler));
+    ASSERT_TRUE(uploadAbortedByOperator);
+}
